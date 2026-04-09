@@ -1,0 +1,39 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+        {
+            "type": "java",
+            "name": "InstantiationserviceApplication",
+            "request": "launch",
+            "mainClass": "com.example.instantiationservice.InstantiationserviceApplication",
+            "projectName": "instantiationservice",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "JobmanagerApplication",
+            "request": "launch",
+            "mainClass": "com.example.jobmanager.JobmanagerApplication",
+            "projectName": "jobmanager"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "StateserviceApplication",
+            "request": "launch",
+            "mainClass": "com.example.stateservice.StateserviceApplication",
+            "projectName": "stateservice",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
