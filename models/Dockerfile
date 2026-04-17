@@ -10,7 +10,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy your GlassBox ML script
-COPY LogisticRegression.py .
+COPY model.py .
 
 # Command to execute when the container spins up
-CMD ["python", "LogisticRegression.py"]
+CMD ["python", "model.py"]

@@ -1,37 +1,24 @@
 package com.example.instantiationservice.service;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.example.instantiationservice.dto.JobRequestDto;
-
 import lombok.RequiredArgsConstructor;
 import software.amazon.awssdk.services.ecs.EcsClient;
-import software.amazon.awssdk.services.ecs.model.AssignPublicIp;
-import software.amazon.awssdk.services.ecs.model.AwsVpcConfiguration;
-import software.amazon.awssdk.services.ecs.model.ContainerOverride;
-import software.amazon.awssdk.services.ecs.model.KeyValuePair;
-import software.amazon.awssdk.services.ecs.model.LaunchType;
-import software.amazon.awssdk.services.ecs.model.NetworkConfiguration;
-import software.amazon.awssdk.services.ecs.model.RunTaskRequest;
-import software.amazon.awssdk.services.ecs.model.RunTaskResponse;
-import software.amazon.awssdk.services.ecs.model.TaskOverride;
+import software.amazon.awssdk.services.ecs.model.*;
 
 @Service
 @RequiredArgsConstructor
-public class LogisticRegressionModelStrategy implements ModelStrategy{
+public class AnnModelStrategy implements ModelStrategy {
 
     private final EcsClient ecsClient;
 
-
     @Override
     public void execute(JobRequestDto request) {
-        System.out.println("--- Starting Instantiation for Job: " + request.getJobid() + " ---");
+        System.out.println("--- Starting ANN Instantiation for Job: " + request.getJobid() + " ---");
 
         try {
             String inputS3Path = request.getDatasetpath(); 
-            
             String outputS3Prefix = String.format("s3://glassbox-workspace/results/%s/", request.getJobid());
 
             ContainerOverride containerOverride = ContainerOverride.builder()
@@ -41,7 +28,7 @@ public class LogisticRegressionModelStrategy implements ModelStrategy{
                             KeyValuePair.builder().name("USER_ID").value(request.getUserid()).build(),
                             KeyValuePair.builder().name("INPUT_S3_PATH").value(inputS3Path).build(),
                             KeyValuePair.builder().name("OUTPUT_S3_PREFIX").value(outputS3Prefix).build(),
-                            KeyValuePair.builder().name("MODEL_TYPE").value("LogisticRegression").build()
+                            KeyValuePair.builder().name("MODEL_TYPE").value("ANN").build() 
                     )
                     .build();
 
@@ -69,21 +56,19 @@ public class LogisticRegressionModelStrategy implements ModelStrategy{
             
             if (response.hasTasks()) {
                 String taskArn = response.tasks().get(0).taskArn();
-                System.out.println("Fargate Task Launched Successfully. ARN: " + taskArn);
+                System.out.println("ANN Fargate Task Launched Successfully. ARN: " + taskArn);
             } else {
                 System.err.println("Task launch failed: " + response.failures().toString());
             }
 
         } catch (Exception e) {
-            System.err.println("Error in LogisticRegressionStrategy: " + e.getMessage());
-            throw new RuntimeException("Failed to spin up model container", e);
+            System.err.println("Error in AnnModelStrategy: " + e.getMessage());
+            throw new RuntimeException("Failed to spin up ANN container", e);
         }
     }
 
     @Override
     public String getModel() {
-        return "LogisticRegression";
+        return "ANN"; 
     }
-
-
 }
