@@ -16,11 +16,15 @@ import lombok.RequiredArgsConstructor;
 public class JobCoordiantionService {
 
     private final KafkaTemplate<String,Job> kafkaTemplate;
+    private static final String BUCKET_NAME = "glassbox-workspace";
     
     public void submitJob(JobSubmissionDto dto){
 
-        Job job=new Job.Builder(UUID.randomUUID().toString(),dto.getUserid(),"jobCreated",dto.getModeltype())
-        .datasetPath(dto.getDatasetpath())
+
+        String internalS3Path=String.format("s3://%s/datasets/%s/%s", BUCKET_NAME, dto.getJobid(),dto.getFileName());
+
+        Job job=new Job.Builder(dto.getJobid(),dto.getUserid(),"jobCreated",dto.getModeltype())
+        .datasetPath(internalS3Path)
         .build();
 
         kafkaTemplate.send(job.getStatus(),job);

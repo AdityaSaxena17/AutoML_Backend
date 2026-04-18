@@ -18,7 +18,8 @@
             "name": "JobmanagerApplication",
             "request": "launch",
             "mainClass": "com.example.jobmanager.JobmanagerApplication",
-            "projectName": "jobmanager"
+            "projectName": "jobmanager",
+            "envFile": "${workspaceFolder}/.env"
         },
         {
             "type": "java",

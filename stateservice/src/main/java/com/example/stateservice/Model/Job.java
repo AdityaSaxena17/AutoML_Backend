@@ -2,7 +2,7 @@ package com.example.stateservice.Model;
 
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-
+import java.util.Map;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -29,7 +29,7 @@ public class Job {
     private String s3path;
     @Column(columnDefinition = "jsonb")
     @JdbcTypeCode(SqlTypes.JSON)
-    private JsonNode results;
+    private Map<String, Object> results;
     @Column(name="model_type")
     private String modeltype;
 

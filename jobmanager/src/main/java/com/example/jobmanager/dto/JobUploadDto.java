@@ -7,10 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class JobSubmissionDto {
+public class JobUploadDto {
 
-    private String userid;
-    private String fileName;
-    private String modeltype;
     private String jobid;
+    private String url;
+
 }
